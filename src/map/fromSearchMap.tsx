@@ -7,6 +7,7 @@
 
 import { APIProvider, Map, Marker, useMap } from "@vis.gl/react-google-maps"
 import { useEffect, useState } from "react"
+import { useAddress } from "../services/addressProvider"
 
 interface MiniMapProps {
     address: string
@@ -45,7 +46,8 @@ function GeocoderHandler({ address }: { address?: string }) {
     )
 }
 
-export default function MiniMap({ address }: MiniMapProps) {
+export default function MiniMap() {
+    const {address}= useAddress();
     return (
         <div style={{
             height: '100px',

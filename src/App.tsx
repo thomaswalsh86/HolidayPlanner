@@ -8,7 +8,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <NavBar />{/*navBar with search*/}
-      {/*<MiniMap address="Address"/> map */}     
+      <MiniMap />{/* map */}     
       {/* buttons */}
       {/* results */}
     </ThemeProvider>

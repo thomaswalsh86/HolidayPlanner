@@ -2,9 +2,7 @@ import * as React from 'react';
 import { AppBar, Box, InputBase, styled, alpha, Typography, Toolbar } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import NavigationIcon from '@mui/icons-material/Navigation';
-//import { search } from '../services/comtextInterface';
-
-
+import { useAddress } from '../services/addressProvider';
 
 const Search = styled('div')(({ theme }: any) => ({
     position: 'relative',
@@ -44,30 +42,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         },
     },
 }));
-//const [address,setAddress] = search.selectAddress|"";
 
 export default function NavBar() {
-  /*
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const isMenuOpen = Boolean(anchorEl);
-
-    const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleMenuClose = () => {
-        setAnchorEl(null);
-    };
-*/
+const {setAddress} = useAddress();
 const searchRef = React.useRef<HTMLInputElement>(null);
 
-  const handleSearch = () => {
-    const searchQuery = searchRef.current?.value;
-    console.log("Your search: " + searchQuery);
-    if (searchQuery) {
-      //API HERE
-    }
-  };
+    const handleSearch = () => {
+        const searchQuery = searchRef.current?.value.trim();
+        if (searchQuery) {
+            setAddress(searchQuery);
+        } 
+    };
 
 
 
