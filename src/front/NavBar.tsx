@@ -50,7 +50,9 @@ const searchRef = React.useRef<HTMLInputElement>(null);
     const handleSearch = () => {
         const searchQuery = searchRef.current?.value.trim();
         if (searchQuery) {
+            console.log("SearchQuery: "+searchQuery);
             setAddress(searchQuery);
+            
         } 
     };
 
@@ -79,6 +81,7 @@ const searchRef = React.useRef<HTMLInputElement>(null);
                             inputRef={searchRef}
                             onKeyDown={(e)=>{
                               if(e.key=== "Enter"){handleSearch();
+                                console.log("Entered!!!"+searchRef.current?.value)
                               }                            
                             }}
                         />

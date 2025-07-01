@@ -18,7 +18,4 @@ export interface AddressContextType{
 	setAddress: (address:string)=>void;
 }
 
-export const AddressContext = createContext<AddressContextType>({
-	address:'',
-	setAddress: ()=>{},
-});
+export const AddressContext = createContext<AddressContextType | undefined>(undefined);
