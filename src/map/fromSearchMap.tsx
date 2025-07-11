@@ -1,12 +1,15 @@
 import { APIProvider, Map, Marker, useMap } from "@vis.gl/react-google-maps"
 import { useEffect, useState } from "react"
+import { useAddress } from "../services/addressProvider"
 
 interface MiniMapProps {
     address: string
+    zoom: number
 }
 
 function GeocoderHandler({ address }: { address?: string }) {
     const map = useMap()
+    const { setLat, setLong } = useAddress();
     const [position, setPosition] = useState({ lat: 53.34, lng: 10 })
     const [loading, setLoading] = useState(false)
 
@@ -19,10 +22,17 @@ function GeocoderHandler({ address }: { address?: string }) {
         geocoder.geocode({ address }, (results, status) => {
             setLoading(false);
             if (status === 'OK' && results?.[0]) {
+                const latVal = results[0].geometry.location.lat();
+                const lngVal = results[0].geometry.location.lng();
+
+                setLat(latVal);
+                setLong(lngVal);
+
                 const newPos = {
-                    lat: results[0].geometry.location.lat(),
-                    lng: results[0].geometry.location.lng()
+                  lat: latVal,
+                  lng: lngVal,
                 };
+
                 console.log("Geocoded position:", newPos);
                 setPosition(newPos);
                 map.panTo(newPos);
@@ -40,7 +50,7 @@ function GeocoderHandler({ address }: { address?: string }) {
     )
 }
 
-export default function MiniMap({ address }: MiniMapProps) {
+export default function MiniMap({ address, zoom }: MiniMapProps) {
     return (
 
             <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY || ""}>
@@ -50,7 +60,7 @@ export default function MiniMap({ address }: MiniMapProps) {
                 defaultZoom={3}
                 gestureHandling={'greedy'}
                 disableDefaultUI={true}
-                zoom={5} >
+                zoom={zoom} >
                 <GeocoderHandler address={address} />
                 </Map>
                 
